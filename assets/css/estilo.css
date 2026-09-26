@@ -115,10 +115,6 @@ main:focus { outline: none; }
 .texto-destaque { font-size: var(--t-destaque); line-height: 1.55; max-width: 38em; color: var(--texto); }
 /* Rótulos sem espaçamento extra entre letras: frações de pixel geravam espaços irregulares em 15 pixels. */
 .rotulo { font-size: var(--t-rotulo); line-height: 1.45; font-weight: 500; letter-spacing: 0; color: var(--tinta); }
-.numeral {
-  display: inline-block; min-width: 1.75em; margin-right: 0;   /* o espaço real no HTML faz a separação */
-  color: var(--marrom); font-weight: 600; font-variant-numeric: tabular-nums;
-}
 figcaption { color: var(--apoio); font-size: var(--t-apoio); line-height: 1.45; }
 
 .ponto {
@@ -144,14 +140,17 @@ figcaption { color: var(--apoio); font-size: var(--t-apoio); line-height: 1.45; 
 .botao--contorno:hover { background: var(--tinta); color: var(--branco); }
 .botao--largo { width: 100%; min-height: 3.5rem; }
 
+/* Link em linha (não flexível): quando o texto quebra, a seta acompanha a última palavra.
+   O preenchimento vertical mantém a área de toque confortável. */
 .link {
-  display: inline-flex; align-items: center; gap: 0.5rem; min-height: 2.75rem;
+  display: inline; padding-block: 0.625rem;
   color: var(--tinta); font-weight: 500;
   text-decoration: underline; text-decoration-thickness: 1px;
   text-decoration-color: var(--fio-forte); text-underline-offset: 0.35em;
   transition: text-decoration-color var(--transicao);
 }
 .link:hover { text-decoration-color: var(--tinta); }
+.link .icone { display: inline-block; margin-left: 0.4rem; vertical-align: -0.15em; }
 .link--seta .icone { transition: transform var(--transicao); }
 .link--seta:hover .icone { transform: translateX(3px); }
 
@@ -270,7 +269,8 @@ figure > picture + figcaption { margin-top: 0.75rem; }
   .secao > .grade::before { margin-bottom: var(--e3); }
   .lateral-foto { margin-top: var(--e4); }
   .lateral-foto .foto { aspect-ratio: 4 / 3; }
-  .lateral-foto--pagina { display: none; }
+  /* A foto das tampinhas tem pouca resolução: no celular ela sairia ampliada. */
+  .lateral-foto--consulta { display: none; }
 }
 @media (min-width: 48rem) and (max-width: 63.99rem) {
   .lateral-foto { grid-column: 1 / 5; }
@@ -306,8 +306,11 @@ figure > picture + figcaption { margin-top: 0.75rem; }
   .so-celular { display: inline; }
   .abertura__fotos { display: contents; }
   .abertura__foto { grid-column: span 6; order: 2; margin-top: var(--e4); }
-  .abertura__foto--primeira { grid-column: 1 / -1; order: -1; margin: 0 0 var(--e3); }
-  .abertura__foto--primeira figcaption { margin-top: 0.5rem; }
+  .abertura__foto--primeira { grid-column: 1 / -1; order: -1; margin: 0 0 var(--e4); }
+  /* No celular a primeira linha de texto da página é o título, não a legenda da foto. */
+  .abertura__foto--primeira figcaption {
+    position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap;
+  }
   .abertura__foto--primeira .foto { aspect-ratio: 16 / 10; }
   .abertura__foto figcaption { font-size: var(--t-rotulo); }
   .acoes .botao { flex: 1 1 100%; }
@@ -376,7 +379,7 @@ figure > picture + figcaption { margin-top: 0.75rem; }
 .conexoes__lista strong { font-weight: 600; }
 @media (max-width: 47.99rem) {
   .conexoes { margin-top: var(--e5); padding-top: var(--e3); }
-  .conexoes__lista li { font-size: 1.1875rem; text-wrap: wrap; }
+  .conexoes__lista li { font-size: 1.125rem; text-wrap: balance; }
 }
 
 @media (min-width: 64rem) {
@@ -452,7 +455,6 @@ figure > picture + figcaption { margin-top: 0.75rem; }
   .entregas dt { display: inline; margin-right: 0.35em; font-size: 1.0625rem; }
   .entregas dd { display: inline; margin: 0; }
 }
-.lateral-foto--pagina .foto { background: var(--branco); border: 1px solid var(--fio); }
 @media (min-width: 64rem) {
   .entregas { display: grid; grid-template-columns: 1fr 1fr; column-gap: var(--calha); }
 }
@@ -505,7 +507,6 @@ figure > picture + figcaption { margin-top: 0.75rem; }
 @media (min-width: 80rem) {
   .consulta { grid-column: 4 / 8; }
 }
-
 
 /* ---------- 17. Na prática ---------- */
 .citacao blockquote p {
@@ -641,16 +642,6 @@ figure > picture + figcaption { margin-top: 0.75rem; }
 }
 
 .contato__lado { margin-top: var(--e4); }
-.contato__material { margin-top: var(--e5); }
-.contato__material img { box-shadow: 0 0 0 1px var(--fio); }
-/* No celular e no tablet, a capa do material fica pequena, com a legenda ao lado. */
-@media (max-width: 47.99rem) {
-  .contato__material { display: none; }
-}
-@media (min-width: 48rem) and (max-width: 63.99rem) {
-  .contato__material { display: grid; grid-template-columns: 8.5rem 1fr; column-gap: var(--e2); align-items: end; margin-top: var(--e4); }
-  .contato__material > picture + figcaption { margin-top: 0; }
-}
 
 .formulario { display: grid; gap: 1.25rem; margin-top: var(--e5); align-content: start; scroll-margin-top: 1.5rem; }
 .formulario__escolha { color: var(--tinta); font-weight: 500; }

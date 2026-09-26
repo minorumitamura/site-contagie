@@ -94,12 +94,12 @@
       }
       form.setAttribute('aria-busy', 'true');
       mostrar('sucesso', 'Enviando…');
-      fetch(window.location.pathname, {
+      fetch('/', {
         method: 'POST',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
         body: new URLSearchParams(new FormData(form)).toString()
       }).then(function (r) {
-        if (!r.ok) throw new Error('resposta ' + r.status);
+        if (!r.ok || r.redirected) throw new Error('resposta ' + r.status);
         form.reset();
         mostrar('sucesso', 'Recebemos o seu contato. Nossa equipe vai falar com você pelo WhatsApp em breve.');
       }).catch(function () {
