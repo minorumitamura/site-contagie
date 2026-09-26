@@ -7,7 +7,7 @@
 <meta name="description" content="A Contagie apoia redes municipais no desenvolvimento da aprendizagem, conectando formação, recursos, acompanhamento e evidências à realidade de cada município.">
 <!-- Versão de trabalho: remover a linha abaixo quando o site for publicado no endereço definitivo. -->
 <meta name="robots" content="noindex, nofollow">
-<meta name="theme-color" content="#0e2419">
+<meta name="theme-color" content="#ffffff">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="assets/marca/icone-180.png">
 <meta property="og:type" content="website">
@@ -15,20 +15,19 @@
 <meta property="og:site_name" content="Contagie">
 <meta property="og:title" content="Toda criança merece um grande começo">
 <meta property="og:description" content="Gestão e Desenvolvimento da Aprendizagem para Redes Municipais: formação, recursos, acompanhamento e evidências conectados à realidade de cada município.">
-<!-- Na publicação definitiva, trocar pelo endereço completo da imagem para que ela apareça no WhatsApp. -->
+<!-- PENDENTE NA PUBLICAÇÃO (bloqueia a publicação): pedir ao cliente o domínio definitivo e então
+     1. trocar o og:image por https://DOMINIO-DEFINITIVO/assets/marca/compartilhamento.jpg (o WhatsApp só mostra imagem com endereço absoluto);
+     2. acrescentar <meta property="og:url" content="https://DOMINIO-DEFINITIVO/"> e <link rel="canonical" href="https://DOMINIO-DEFINITIVO/">;
+     3. retirar o meta robots noindex acima;
+     4. conferir a prévia no depurador de compartilhamento do Facebook (o mesmo leitor do WhatsApp) e numa conversa do WhatsApp. -->
 <meta property="og:image" content="assets/marca/compartilhamento.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<link rel="preload" href="assets/fontes/bricolage-grotesque-variavel.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="assets/fontes/instrument-serif-italico.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" as="image" href="assets/imagens/cinema-musgo-1200.avif" type="image/avif" imagesrcset="assets/imagens/cinema-musgo-800.avif 800w, assets/imagens/cinema-musgo-1200.avif 1200w, assets/imagens/cinema-musgo-1568.avif 1568w" imagesizes="100vw">
+<meta property="og:image:alt" content="Uma criança tocando ukulele, uma borboleta na palma da mão e o título Toda criança merece um grande começo, com o logotipo da Contagie.">
+<link rel="preload" href="assets/fontes/hanken-grotesk-variavel.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="assets/css/estilo.css">
-<script>(function(r){r.classList.add('js');if(window.matchMedia&&window.matchMedia('(min-width: 64rem) and (prefers-reduced-motion: no-preference)').matches){r.classList.add('cinema');}setTimeout(function(){if(!window.contagiePronto){r.classList.remove('js','cinema');}},3500);})(document.documentElement);</script>
-<script src="assets/js/bibliotecas/gsap.min.js" defer></script>
-<script src="assets/js/bibliotecas/ScrollTrigger.min.js" defer></script>
-<script src="assets/js/bibliotecas/SplitText.min.js" defer></script>
-<script src="assets/js/bibliotecas/DrawSVGPlugin.min.js" defer></script>
-<script src="assets/js/bibliotecas/lenis.min.js" defer></script>
+<!-- A classe js esconde o menu no celular. Se o principal.js não carregar (bloqueio de rede, publicação parcial), ela sai e a navegação volta a aparecer. -->
+<script>document.documentElement.classList.add('js');addEventListener('load',function(){if(!window.contagieMenu)document.documentElement.classList.remove('js')});</script>
 <script src="assets/js/principal.js" defer></script>
 <script type="application/ld+json">
 {
@@ -43,247 +42,285 @@
 </head>
 <body>
 
-<svg xmlns="http://www.w3.org/2000/svg" hidden>
-  <symbol id="seta" viewBox="0 0 24 24"><path d="M4 12h15.5M13.5 6l6 6-6 6"/></symbol>
-  <symbol id="marca-feito" viewBox="0 0 24 24"><path d="M5 12.5 10 17.5 19.5 7"/></symbol>
+<svg class="sprite" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+  <symbol id="seta" viewBox="0 0 24 24"><path d="M4 12h15M13.5 6.5 19 12l-5.5 5.5"/></symbol>
+  <symbol id="feito" viewBox="0 0 24 24"><path d="M5 12.5 10 17.5 19 7.5"/></symbol>
 </svg>
 
 <a class="pular" href="#conteudo">Pular para o conteúdo principal</a>
-<div class="progresso" aria-hidden="true"><span data-progresso></span></div>
 
-<header class="cabecalho" data-cabecalho>
-  <div class="cabecalho__interno">
+<header class="cabecalho">
+  <div class="recipiente cabecalho__interno">
     <a class="marca" href="#inicio">
-      <img class="marca__clara-fundo" src="assets/marca/contagie-logotipo-reduzido.webp" width="360" height="120" alt="Contagie, voltar ao início">
-      <img class="marca__escuro-fundo" src="assets/marca/contagie-logotipo-claro-reduzido.webp" width="360" height="120" alt="" aria-hidden="true">
+      <img src="assets/marca/contagie-logotipo-reduzido.webp" width="360" height="120" alt="Contagie, voltar ao início">
     </a>
-    <button class="menu-botao" type="button" aria-expanded="false" aria-controls="navegacao" data-menu-botao>
-      <span class="menu-botao__texto">Menu</span>
-      <span class="menu-botao__traco" aria-hidden="true"></span>
+    <a class="botao botao--contorno cabecalho__atalho" href="#formulario-contato">Fale conosco</a>
+    <button class="menu-botao" type="button" aria-expanded="false" aria-controls="navegacao" hidden>
+      <span>Menu</span>
+      <span class="menu-botao__icone" aria-hidden="true"></span>
     </button>
-    <nav class="navegacao" id="navegacao" aria-label="Principal" data-navegacao>
-      <ul role="list">
+    <nav class="navegacao" id="navegacao" aria-label="Principal">
+      <ul>
         <li><a href="#metodo">Como funciona</a></li>
         <li><a href="#frentes">Frentes</a></li>
-        <li><a href="#evidencias">Evidências</a></li>
+        <li><a href="#colecao">Coleção</a></li>
         <li><a href="#contratacao">Contratação</a></li>
+        <li class="navegacao__contato"><a href="#formulario-contato">Fale com a equipe</a></li>
       </ul>
-      <a class="botao botao--escuro navegacao__chamada" href="#contato"><span>Fale com a equipe</span><svg class="icone" aria-hidden="true"><use href="#seta"/></svg></a>
+      <a class="botao botao--contorno navegacao__chamada" href="#contato">Fale com a equipe</a>
     </nav>
   </div>
 </header>
 
 <main id="conteudo" tabindex="-1">
 
-  <!-- 1. Abertura: a copa se abre ao rolar -->
-  <section class="abertura" id="inicio" aria-labelledby="titulo-abertura" data-abertura>
-    <div class="abertura__palco" data-palco>
-      <div class="abertura__conteudo" data-abertura-conteudo>
-        <p class="rotulo">Gestão e Desenvolvimento da Aprendizagem para Redes Municipais</p>
-        <h1 class="titulo-mega" id="titulo-abertura" data-dividir>Toda criança merece um grande <em>começo.</em></h1>
-        <div class="abertura__base">
-          <p class="destaque">A Contagie apoia redes municipais no desenvolvimento da aprendizagem, conectando formação, recursos, acompanhamento e evidências à realidade de cada município.</p>
-          <div class="acoes">
-            <a class="botao botao--escuro" href="#contato"><span>Fale com a nossa equipe</span><svg class="icone" aria-hidden="true"><use href="#seta"/></svg></a>
-            <a class="link-linha" href="#metodo">Veja como funciona</a>
-          </div>
+  <!-- Legendas das fotografias: voz pedagógica curta, sem fatos novos; a descrição literal fica só no texto alternativo.
+       Aguardam a aprovação da equipe da Contagie antes da publicação definitiva. -->
+
+  <!-- 1. Abertura -->
+  <section class="abertura" id="inicio" aria-labelledby="titulo-abertura">
+    <div class="recipiente grade">
+      <div class="abertura__titulo">
+        <p class="rotulo"><span class="so-computador">Gestão e Desenvolvimento da Aprendizagem para Redes Municipais</span><span class="so-celular">Para Redes Municipais</span></p>
+        <h1 class="texto-display" id="titulo-abertura">Toda criança merece um grande começo<span class="ponto" aria-hidden="true"></span><span class="oculto">.</span></h1>
+      </div>
+      <div class="abertura__apoio">
+        <p class="texto-destaque">A Contagie, de Londrina, Paraná, apoia redes municipais com formação de professores, materiais para a Educação Infantil, recomposição da aprendizagem, assessoria à secretaria e acompanhamento com evidências, sempre a partir da realidade de cada município.</p>
+        <div class="acoes">
+          <a class="botao" href="#contato">Fale com a nossa equipe<svg class="icone" aria-hidden="true"><use href="#seta"/></svg></a>
+          <a class="link" href="#metodo">Veja como funciona</a>
         </div>
       </div>
-
-      <div class="abertura__copa" data-copa>
-        <picture>
-          <source type="image/avif" srcset="assets/imagens/cinema-musgo-800.avif 800w, assets/imagens/cinema-musgo-1200.avif 1200w, assets/imagens/cinema-musgo-1568.avif 1568w" sizes="100vw">
-          <source type="image/webp" srcset="assets/imagens/cinema-musgo-800.webp 800w, assets/imagens/cinema-musgo-1200.webp 1200w, assets/imagens/cinema-musgo-1568.webp 1568w" sizes="100vw">
-          <img src="assets/imagens/cinema-musgo-1200.webp" width="1568" height="1110" alt="Pés descalços de uma criança sobre um tronco coberto de musgo, na floresta. Fotografia da capa do livro do Grupo 4 da Coleção Percurso da Aprendizagem." fetchpriority="high" decoding="async">
-        </picture>
-        <div class="abertura__veu" data-veu aria-hidden="true"></div>
-      </div>
-      <svg class="abertura__anel" viewBox="0 0 100 100" aria-hidden="true" focusable="false" data-anel><circle cx="50" cy="50" r="49.2"/></svg>
-
-      <div class="abertura__declaracao" data-declaracao>
-        <h2 class="titulo-display" data-dividir-linhas>O melhor da educação precisa encontrar a realidade de cada município.</h2>
-        <p>Por isso, não começamos por uma solução pronta. Começamos entendendo as crianças, os profissionais, os desafios, as prioridades e a realidade da rede.</p>
-      </div>
-
-      <p class="abertura__rolar" aria-hidden="true" data-rolar><span></span>Role para ver</p>
-    </div>
-  </section>
-
-  <!-- 2. O desafio: muitas decisões, uma direção -->
-  <section class="secao desafio" id="desafio" aria-labelledby="titulo-desafio" data-desafio>
-    <div class="recipiente desafio__grade">
-      <div class="desafio__cabeca">
-        <p class="rotulo">O desafio</p>
-        <h2 class="titulo-secao" id="titulo-desafio" data-revelar-linhas>A aprendizagem é construída por muitas decisões.</h2>
-        <p class="serifa-grande">E elas precisam caminhar na mesma direção.</p>
-      </div>
-
-      <div class="convergencia" data-convergencia>
-        <ul class="convergencia__frentes" role="list">
-          <li data-frente-palavra>Currículo</li>
-          <li data-frente-palavra>Formação</li>
-          <li data-frente-palavra>Materiais</li>
-          <li data-frente-palavra>Acompanhamento</li>
-          <li data-frente-palavra>Gestão</li>
-          <li data-frente-palavra>Prática pedagógica</li>
-        </ul>
-        <svg class="convergencia__linhas" aria-hidden="true" focusable="false" data-convergencia-linhas></svg>
-        <p class="convergencia__alvo" data-convergencia-alvo><span class="convergencia__ponto" aria-hidden="true"></span><span>cada criança</span></p>
-      </div>
-
-      <p class="desafio__texto">Currículo, formação, materiais, acompanhamento, gestão e prática pedagógica fazem parte de uma mesma jornada. A Contagie ajuda o município a conectar essas frentes em torno do que mais importa: o desenvolvimento de cada criança.</p>
-    </div>
-  </section>
-
-  <!-- 3. Como funciona: o ciclo contínuo -->
-  <section class="secao secao--escura metodo" id="metodo" aria-labelledby="titulo-metodo" data-metodo>
-    <div class="recipiente metodo__cabeca">
-      <p class="rotulo">Como funciona</p>
-      <h2 class="titulo-secao" id="titulo-metodo" data-revelar-linhas>Da compreensão da realidade às decisões que chegam até a criança.</h2>
-      <p class="destaque">Diagnóstico, formação, recursos, acompanhamento e evidências formam uma jornada contínua de apoio à rede.</p>
-    </div>
-
-    <div class="metodo__palco" data-metodo-palco>
-      <div class="recipiente metodo__grade">
-        <div class="metodo__roda" aria-hidden="true" data-metodo-roda>
-          <svg viewBox="0 0 600 600" focusable="false">
-            <circle class="metodo__trilho" cx="300" cy="300" r="270"/>
-            <circle class="metodo__avanco" cx="300" cy="300" r="270" transform="rotate(-90 300 300)" data-metodo-avanco/>
-            <g data-metodo-marcas></g>
-          </svg>
-          <div class="metodo__centro">
-            <span class="metodo__numero" data-metodo-numero>01</span>
-          </div>
-        </div>
-
-        <ol class="metodo__etapas" role="list" data-metodo-etapas>
-          <li class="etapa" data-etapa><span class="etapa__numero">01</span><h3 class="etapa__nome">Compreender</h3><p>Conhecemos as crianças, os profissionais, os desafios e as prioridades da rede antes de propor qualquer caminho.</p></li>
-          <li class="etapa" data-etapa><span class="etapa__numero">02</span><h3 class="etapa__nome">Planejar</h3><p>Transformamos o que foi compreendido em prioridades claras e em um plano construído junto à secretaria.</p></li>
-          <li class="etapa" data-etapa><span class="etapa__numero">03</span><h3 class="etapa__nome">Preparar</h3><p>Formamos as equipes e organizamos os recursos para que cada ação chegue às escolas com sentido.</p></li>
-          <li class="etapa" data-etapa><span class="etapa__numero">04</span><h3 class="etapa__nome">Apoiar</h3><p>Ficamos ao lado de coordenadores, gestores e professores enquanto o trabalho acontece na prática.</p></li>
-          <li class="etapa" data-etapa><span class="etapa__numero">05</span><h3 class="etapa__nome">Acompanhar</h3><p>Observamos o uso dos recursos, a participação e as práticas para identificar o que precisa de ajuste.</p></li>
-          <li class="etapa" data-etapa><span class="etapa__numero">06</span><h3 class="etapa__nome">Aprender com as evidências</h3><p>Reunimos o que a rede observa, registra e avalia para entender o que está funcionando e por quê.</p></li>
-          <li class="etapa" data-etapa><span class="etapa__numero">07</span><h3 class="etapa__nome">Decidir novamente</h3><p>Usamos o que foi aprendido para orientar as próximas escolhas. E o ciclo recomeça, mais preciso a cada volta.</p></li>
-        </ol>
+      <div class="abertura__fotos">
+        <figure class="abertura__foto">
+          <picture class="foto">
+            <source media="(max-width: 47.99rem)" type="image/avif" srcset="assets/imagens/abertura-borboleta-perto-360.avif 360w, assets/imagens/abertura-borboleta-perto-411.avif 411w" sizes="45vw">
+            <source media="(max-width: 47.99rem)" type="image/webp" srcset="assets/imagens/abertura-borboleta-perto-360.webp 360w, assets/imagens/abertura-borboleta-perto-411.webp 411w" sizes="45vw">
+            <source type="image/avif" srcset="assets/imagens/abertura-borboleta-360.avif 360w, assets/imagens/abertura-borboleta-576.avif 576w" sizes="(min-width: 90rem) 410px, (min-width: 48rem) 30vw, 45vw">
+            <source type="image/webp" srcset="assets/imagens/abertura-borboleta-360.webp 360w, assets/imagens/abertura-borboleta-576.webp 576w" sizes="(min-width: 90rem) 410px, (min-width: 48rem) 30vw, 45vw">
+            <img src="assets/imagens/abertura-borboleta-576.webp" width="576" height="576" alt="Uma borboleta preta com pintas claras pousada na palma aberta de uma mão, com outra mão logo atrás.">
+          </picture>
+          <figcaption>Observar de perto: a curiosidade vem antes da explicação.</figcaption>
+        </figure>
+        <figure class="abertura__foto">
+          <picture class="foto">
+            <source type="image/avif" srcset="assets/imagens/abertura-cesto-360.avif 360w, assets/imagens/abertura-cesto-655.avif 655w" sizes="(min-width: 90rem) 410px, (min-width: 48rem) 30vw, 45vw">
+            <source type="image/webp" srcset="assets/imagens/abertura-cesto-360.webp 360w, assets/imagens/abertura-cesto-655.webp 655w" sizes="(min-width: 90rem) 410px, (min-width: 48rem) 30vw, 45vw">
+            <img src="assets/imagens/abertura-cesto-655.webp" width="655" height="655" alt="Uma criança pequena de macacão listrado, de pé, ao lado de uma pessoa ajoelhada que segura um cesto de vime com brinquedos de madeira; uma mão pega um dos brinquedos.">
+          </picture>
+          <figcaption>Objetos de madeira para explorar com as mãos e com calma.</figcaption>
+        </figure>
+        <figure class="abertura__foto abertura__foto--primeira">
+          <picture class="foto">
+            <source media="(max-width: 47.99rem)" type="image/avif" srcset="assets/imagens/crianca-ukulele-paisagem-390.avif 390w, assets/imagens/crianca-ukulele-paisagem-640.avif 640w, assets/imagens/crianca-ukulele-paisagem-825.avif 825w" sizes="calc(100vw - 2.5rem)">
+            <source media="(max-width: 47.99rem)" type="image/webp" srcset="assets/imagens/crianca-ukulele-paisagem-390.webp 390w, assets/imagens/crianca-ukulele-paisagem-640.webp 640w, assets/imagens/crianca-ukulele-paisagem-825.webp 825w" sizes="calc(100vw - 2.5rem)">
+            <source type="image/avif" srcset="assets/imagens/abertura-ukulele-360.avif 360w, assets/imagens/abertura-ukulele-584.avif 584w" sizes="(min-width: 90rem) 410px, 30vw">
+            <source type="image/webp" srcset="assets/imagens/abertura-ukulele-360.webp 360w, assets/imagens/abertura-ukulele-584.webp 584w" sizes="(min-width: 90rem) 410px, 30vw">
+            <img src="assets/imagens/abertura-ukulele-584.webp" width="584" height="584" fetchpriority="high" alt="Criança com roupa xadrez tocando um ukulele de madeira no colo.">
+          </picture>
+          <figcaption>Música, ritmo e escuta desde os primeiros anos.</figcaption>
+        </figure>
       </div>
     </div>
   </section>
 
-  <!-- 4. Por que funciona: tudo conectado -->
-  <section class="secao conexoes" aria-labelledby="titulo-conexoes">
-    <div class="recipiente">
-      <h2 class="conexoes__titulo" id="titulo-conexoes">Mais do que oferecer recursos, criamos condições para que eles façam sentido juntos.</h2>
-      <ul class="conexoes__linhas" role="list" data-conexoes>
-        <li>A <em>formação</em> conversa com os materiais.</li>
-        <li>O <em>acompanhamento</em> conversa com a prática.</li>
-        <li>As <em>evidências</em> orientam as próximas decisões.</li>
-        <li>E tudo parte dos objetivos da <em>própria rede.</em></li>
+  <!-- 2. Ponto de partida e o desafio -->
+  <section class="secao" id="ponto-de-partida" aria-labelledby="titulo-partida">
+    <div class="recipiente grade">
+      <p class="rotulo secao__rotulo"><span class="numeral" aria-hidden="true">1</span> Ponto de partida</p>
+      <div class="secao__cabeca">
+        <h2 class="texto-titulo" id="titulo-partida">O melhor da educação precisa encontrar a realidade de cada município.</h2>
+        <p class="texto-destaque">Por isso, não começamos por uma solução pronta. Começamos entendendo as crianças, os profissionais, os desafios, as prioridades e a realidade da rede.</p>
+      </div>
+
+      <div class="desafio">
+        <h3 class="texto-subtitulo">A aprendizagem é construída por muitas decisões. E elas precisam caminhar na mesma direção.</h3>
+        <p>Currículo, formação, materiais, acompanhamento, gestão e prática pedagógica fazem parte de uma mesma jornada. A Contagie ajuda o município a conectar essas frentes em torno do que mais importa: o desenvolvimento de cada criança.</p>
+      </div>
+      <ul class="desafio__lista">
+        <li>Currículo</li>
+        <li>Formação</li>
+        <li>Materiais</li>
+        <li>Acompanhamento</li>
+        <li>Gestão</li>
+        <li>Prática pedagógica</li>
+        <li class="desafio__destino"><svg class="icone" aria-hidden="true"><use href="#seta"/></svg>Cada criança</li>
       </ul>
     </div>
   </section>
 
-  <!-- 5. Frentes de trabalho -->
-  <section class="secao frentes" id="frentes" aria-labelledby="titulo-frentes">
-    <div class="recipiente">
-      <div class="cabeca">
-        <p class="rotulo">Frentes de trabalho</p>
-        <h2 class="titulo-secao" id="titulo-frentes" data-revelar-linhas>Cada etapa da educação traz desafios diferentes. O compromisso com a aprendizagem é o mesmo.</h2>
+  <!-- 3. Como funciona: o ciclo em sete etapas -->
+  <section class="secao" id="metodo" aria-labelledby="titulo-metodo">
+    <div class="recipiente grade">
+      <p class="rotulo secao__rotulo"><span class="numeral" aria-hidden="true">2</span> Como funciona</p>
+      <div class="secao__cabeca">
+        <h2 class="texto-titulo" id="titulo-metodo">Da compreensão da realidade às decisões que chegam até a criança.</h2>
+        <p class="texto-destaque">Diagnóstico, formação, recursos, acompanhamento e evidências formam um ciclo contínuo de apoio à rede, em sete etapas.</p>
       </div>
 
-      <div class="frentes__grade">
-        <article class="frente" id="educacao-infantil" aria-labelledby="titulo-infantil">
-          <div class="frente__foto" data-paralaxe>
-            <picture>
-              <source type="image/avif" srcset="assets/imagens/frente-infantil-lama-480.avif 480w, assets/imagens/frente-infantil-lama-720.avif 720w, assets/imagens/frente-infantil-lama-888.avif 888w" sizes="(min-width: 64rem) 44vw, 92vw">
-              <source type="image/webp" srcset="assets/imagens/frente-infantil-lama-480.webp 480w, assets/imagens/frente-infantil-lama-720.webp 720w, assets/imagens/frente-infantil-lama-888.webp 888w" sizes="(min-width: 64rem) 44vw, 92vw">
-              <img src="assets/imagens/frente-infantil-lama-720.webp" width="888" height="1110" loading="lazy" decoding="async" alt="Pés de uma criança pequena caminhando descalça na lama. Fotografia da capa do livro do Grupo 2 da coleção.">
-            </picture>
-          </div>
-          <div class="frente__texto">
-            <p class="rotulo">Educação Infantil</p>
-            <h3 class="titulo-frente" id="titulo-infantil">Um grande começo abre possibilidades para a vida inteira.</h3>
-            <p>Desenvolvimento integral, formação, acompanhamento, recursos e documentação pedagógica para apoiar experiências significativas desde os primeiros anos.</p>
-            <p class="frente__publico">Creches e pré-escolas da rede municipal, de zero a cinco anos</p>
-            <a class="link-seta" href="#contato" data-assunto="Educação Infantil"><span>Conversar sobre Educação Infantil</span><svg class="icone" aria-hidden="true"><use href="#seta"/></svg></a>
-          </div>
-        </article>
+      <figure class="lateral-foto metodo__foto">
+        <picture class="foto">
+          <source media="(max-width: 47.99rem)" type="image/avif" srcset="assets/imagens/gravetos-4x3-390.avif 390w, assets/imagens/gravetos-4x3-616.avif 616w" sizes="calc(100vw - 2.5rem)">
+          <source media="(max-width: 47.99rem)" type="image/webp" srcset="assets/imagens/gravetos-4x3-390.webp 390w, assets/imagens/gravetos-4x3-616.webp 616w" sizes="calc(100vw - 2.5rem)">
+          <source type="image/avif" srcset="assets/imagens/gravetos-4x5-296.avif 296w, assets/imagens/gravetos-4x5-439.avif 439w" sizes="(min-width: 90rem) 296px, (min-width: 64rem) 22vw, 15rem">
+          <source type="image/webp" srcset="assets/imagens/gravetos-4x5-296.webp 296w, assets/imagens/gravetos-4x5-439.webp 439w" sizes="(min-width: 90rem) 296px, (min-width: 64rem) 22vw, 15rem">
+          <img src="assets/imagens/gravetos-4x5-439.webp" width="439" height="549" loading="lazy" decoding="async" alt="Mão de uma criança mexendo em gravetos dentro de uma caixa transparente, sobre a areia; no alto aparecem as sandálias de outra criança.">
+        </picture>
+        <figcaption>Separar, comparar, organizar: o pensamento começa nas mãos.</figcaption>
+      </figure>
 
-        <article class="frente frente--desalinhada" id="recomposicao" aria-labelledby="titulo-recomposicao">
-          <div class="frente__foto" data-paralaxe>
-            <picture>
-              <source type="image/avif" srcset="assets/imagens/frente-recomposicao-pedra-480.avif 480w, assets/imagens/frente-recomposicao-pedra-720.avif 720w, assets/imagens/frente-recomposicao-pedra-888.avif 888w" sizes="(min-width: 64rem) 44vw, 92vw">
-              <source type="image/webp" srcset="assets/imagens/frente-recomposicao-pedra-480.webp 480w, assets/imagens/frente-recomposicao-pedra-720.webp 720w, assets/imagens/frente-recomposicao-pedra-888.webp 888w" sizes="(min-width: 64rem) 44vw, 92vw">
-              <img src="assets/imagens/frente-recomposicao-pedra-720.webp" width="888" height="1110" loading="lazy" decoding="async" alt="Pés descalços equilibrados sobre uma pedra no meio de um riacho. Fotografia da capa do livro do Grupo 5 da coleção.">
-            </picture>
-          </div>
-          <div class="frente__texto">
-            <p class="rotulo">Recomposição da aprendizagem</p>
-            <h3 class="titulo-frente" id="titulo-recomposicao">Cada estudante precisa encontrar o caminho para aprender o que ainda não aprendeu.</h3>
-            <p>Diagnóstico, priorização, intervenção e acompanhamento para transformar evidências de aprendizagem em decisões pedagógicas mais precisas.</p>
-            <a class="link-seta" href="#contato" data-assunto="Recomposição da aprendizagem"><span>Conversar sobre Recomposição</span><svg class="icone" aria-hidden="true"><use href="#seta"/></svg></a>
-          </div>
-        </article>
+      <div class="metodo__etapas">
+        <ol class="etapas">
+          <li><span class="etapas__numero" aria-hidden="true">1</span><h3>Compreender</h3><p>Conhecemos as crianças, os profissionais, os desafios e as prioridades da rede antes de propor qualquer caminho.</p></li>
+          <li><span class="etapas__numero" aria-hidden="true">2</span><h3>Planejar</h3><p>Transformamos o que foi compreendido em prioridades claras e em um plano construído junto à secretaria.</p></li>
+          <li><span class="etapas__numero" aria-hidden="true">3</span><h3>Preparar</h3><p>Formamos as equipes e organizamos os recursos para que cada ação chegue às escolas com sentido.</p></li>
+          <li><span class="etapas__numero" aria-hidden="true">4</span><h3>Apoiar</h3><p>Ficamos ao lado de coordenadores, gestores e professores enquanto o trabalho acontece na prática.</p></li>
+          <li><span class="etapas__numero" aria-hidden="true">5</span><h3>Acompanhar</h3><p>Observamos o uso dos recursos, a participação e as práticas para identificar o que precisa de ajuste.</p></li>
+          <li><span class="etapas__numero" aria-hidden="true">6</span><h3>Aprender com as evidências</h3><p>Reunimos o que a rede observa, registra e avalia para entender o que está funcionando e por quê.</p></li>
+          <li><span class="etapas__numero" aria-hidden="true">7</span><h3>Decidir novamente</h3><p>Usamos o que foi aprendido para orientar as próximas escolhas da rede.</p></li>
+        </ol>
+        <p class="etapas__nota">Depois da sétima etapa, o ciclo recomeça, mais preciso a cada volta.</p>
+      </div>
+
+      <div class="conexoes">
+        <h3 class="texto-subtitulo">Mais do que oferecer recursos, criamos condições para que eles façam sentido juntos.</h3>
+        <ul class="conexoes__lista">
+          <li>A <strong>formação</strong> conversa com os materiais.</li>
+          <li>O <strong>acompanhamento</strong> conversa com a prática.</li>
+          <li>As <strong>evidências</strong> orientam as próximas decisões.</li>
+          <li>E tudo parte dos objetivos da <strong>própria rede</strong>.</li>
+        </ul>
       </div>
     </div>
   </section>
 
-  <!-- 6. Coleção Percurso da Aprendizagem -->
-  <section class="secao secao--sombra colecao" id="colecao" aria-labelledby="titulo-colecao">
-    <div class="recipiente">
-      <div class="colecao__cabeca">
-        <div>
-          <p class="rotulo">Para a Educação Infantil</p>
-          <h2 class="titulo-secao" id="titulo-colecao" data-revelar-linhas>Coleção Percurso da Aprendizagem</h2>
-        </div>
-        <div class="colecao__apoio">
-          <p class="destaque">Cinco percursos, do Grupo 1 ao Grupo 5, com livro do educador, fichas do Percurso da Criança e orientações da Bússola do Educador.</p>
-          <a class="link-seta" href="#contato" data-amostra><span>Receber o material demonstrativo</span><svg class="icone" aria-hidden="true"><use href="#seta"/></svg></a>
-        </div>
+  <!-- 4. Frentes de trabalho -->
+  <section class="secao" id="frentes" aria-labelledby="titulo-frentes">
+    <div class="recipiente grade">
+      <p class="rotulo secao__rotulo"><span class="numeral" aria-hidden="true">3</span> Frentes de trabalho</p>
+      <div class="secao__cabeca">
+        <h2 class="texto-titulo" id="titulo-frentes">Cada etapa da educação traz desafios diferentes. O compromisso com a aprendizagem é o mesmo.</h2>
       </div>
 
-      <ol class="colecao__livros" role="list" data-livros>
-        <li class="livro"><img src="assets/imagens/capa-grupo-1-480.webp" width="480" height="340" loading="lazy" decoding="async" alt="Capa do livro do educador do Grupo 1, Vivenciando a natureza."><p><span>Grupo 1</span>Vivenciando a natureza</p></li>
-        <li class="livro"><img src="assets/imagens/capa-grupo-2-480.webp" width="480" height="340" loading="lazy" decoding="async" alt="Capa do livro do educador do Grupo 2, Encantando-se com a natureza."><p><span>Grupo 2</span>Encantando-se com a natureza</p></li>
-        <li class="livro"><img src="assets/imagens/capa-grupo-3-480.webp" width="480" height="340" loading="lazy" decoding="async" alt="Capa do livro do educador do Grupo 3, Desbravando a natureza."><p><span>Grupo 3</span>Desbravando a natureza</p></li>
-        <li class="livro"><img src="assets/imagens/capa-grupo-4-480.webp" width="480" height="340" loading="lazy" decoding="async" alt="Capa do livro do educador do Grupo 4, Caminhos da natureza."><p><span>Grupo 4</span>Caminhos da natureza</p></li>
-        <li class="livro"><img src="assets/imagens/capa-grupo-5-480.webp" width="480" height="340" loading="lazy" decoding="async" alt="Capa do livro do educador do Grupo 5, Aprendendo com a natureza."><p><span>Grupo 5</span>Aprendendo com a natureza</p></li>
+      <article class="frente" id="educacao-infantil" aria-labelledby="titulo-infantil">
+        <picture class="foto foto--paisagem">
+          <source type="image/avif" srcset="assets/imagens/massinha-5x4-420.avif 420w, assets/imagens/massinha-5x4-640.avif 640w, assets/imagens/massinha-5x4-846.avif 846w" sizes="(min-width: 90rem) 624px, (min-width: 48rem) 44vw, calc(100vw - 2.5rem)">
+          <source type="image/webp" srcset="assets/imagens/massinha-5x4-420.webp 420w, assets/imagens/massinha-5x4-640.webp 640w, assets/imagens/massinha-5x4-846.webp 846w" sizes="(min-width: 90rem) 624px, (min-width: 48rem) 44vw, calc(100vw - 2.5rem)">
+          <img src="assets/imagens/massinha-5x4-640.webp" width="846" height="677" loading="lazy" decoding="async" alt="Mão de uma criança amassando massinha de modelar sobre uma mesa azul, ao lado de uma forminha.">
+        </picture>
+        <h3 class="texto-subtitulo" id="titulo-infantil"><span class="rotulo">Educação Infantil<span class="oculto">.</span></span> Um grande começo abre possibilidades para a vida inteira.</h3>
+        <p>Desenvolvimento integral, formação, acompanhamento, recursos e documentação pedagógica para apoiar experiências significativas desde os primeiros anos, em creches e pré-escolas da rede municipal, de zero a cinco anos.</p>
+        <a class="link link--seta" href="#formulario-contato" data-assunto="Educação Infantil">Conversar sobre Educação Infantil<svg class="icone" aria-hidden="true"><use href="#seta"/></svg></a>
+      </article>
+
+      <article class="frente" id="recomposicao" aria-labelledby="titulo-recomposicao">
+        <picture class="foto foto--paisagem">
+          <source type="image/avif" srcset="assets/imagens/dedo-desenhando-na-areia-420.avif 420w, assets/imagens/dedo-desenhando-na-areia-640.avif 640w, assets/imagens/dedo-desenhando-na-areia-900.avif 900w" sizes="(min-width: 90rem) 624px, (min-width: 48rem) 44vw, calc(100vw - 2.5rem)">
+          <source type="image/webp" srcset="assets/imagens/dedo-desenhando-na-areia-420.webp 420w, assets/imagens/dedo-desenhando-na-areia-640.webp 640w, assets/imagens/dedo-desenhando-na-areia-900.webp 900w" sizes="(min-width: 90rem) 624px, (min-width: 48rem) 44vw, calc(100vw - 2.5rem)">
+          <img src="assets/imagens/dedo-desenhando-na-areia-640.webp" width="900" height="720" loading="lazy" decoding="async" alt="Dedo de uma criança traçando linhas na areia fina.">
+        </picture>
+        <h3 class="texto-subtitulo" id="titulo-recomposicao"><span class="rotulo">Recomposição da aprendizagem<span class="oculto">.</span></span> Cada estudante precisa encontrar o caminho para aprender o que ainda não aprendeu.</h3>
+        <!-- PENDENTE: confirmar com o cliente para quais etapas e anos a recomposição serve (por exemplo "para estudantes do
+             Ensino Fundamental, anos iniciais") e acrescentar ao fim deste parágrafo, como a Educação Infantil diz "de zero a cinco anos". -->
+        <p>Diagnóstico, priorização, intervenção e acompanhamento para transformar evidências de aprendizagem em decisões pedagógicas mais precisas.</p>
+        <a class="link link--seta" href="#formulario-contato" data-assunto="Recomposição da aprendizagem">Conversar sobre recomposição da aprendizagem<svg class="icone" aria-hidden="true"><use href="#seta"/></svg></a>
+      </article>
+    </div>
+  </section>
+
+  <!-- 5. Coleção Percurso da Aprendizagem -->
+  <section class="secao secao--areia" id="colecao" aria-labelledby="titulo-colecao">
+    <div class="recipiente grade">
+      <p class="rotulo secao__rotulo"><span class="numeral" aria-hidden="true">4</span> Coleção</p>
+      <div class="secao__cabeca">
+        <h2 class="texto-titulo" id="titulo-colecao">Coleção Percurso da Aprendizagem</h2>
+        <p class="texto-destaque">Para a Educação Infantil: cinco percursos, do Grupo 1 ao Grupo 5, com livro do educador, fichas do Percurso da Criança e orientações da Bússola do Educador.</p>
+      </div>
+
+      <!-- PENDENTE: confirmar com o cliente a faixa etária de cada grupo (por exemplo "Grupo 1 · crianças de 1 ano")
+           e acrescentá-la às legendas das capas. Não publicar idades antes da confirmação. -->
+      <div class="livros-bloco">
+      <ol class="livros">
+        <li><picture><source type="image/avif" srcset="assets/imagens/capa-grupo-1-280.avif 280w, assets/imagens/capa-grupo-1-480.avif 480w" sizes="(min-width: 90rem) 296px, (min-width: 64rem) 22vw, (min-width: 48rem) 30vw, 45vw"><img src="assets/imagens/capa-grupo-1-480.webp" srcset="assets/imagens/capa-grupo-1-280.webp 280w, assets/imagens/capa-grupo-1-480.webp 480w" sizes="(min-width: 90rem) 296px, (min-width: 64rem) 22vw, (min-width: 48rem) 30vw, 45vw" width="480" height="340" loading="lazy" decoding="async" alt="Capa do livro do educador do Grupo 1, Vivenciando a natureza."></picture><p><span>Grupo 1</span> Vivenciando a natureza</p></li>
+        <li><picture><source type="image/avif" srcset="assets/imagens/capa-grupo-2-280.avif 280w, assets/imagens/capa-grupo-2-480.avif 480w" sizes="(min-width: 90rem) 296px, (min-width: 64rem) 22vw, (min-width: 48rem) 30vw, 45vw"><img src="assets/imagens/capa-grupo-2-480.webp" srcset="assets/imagens/capa-grupo-2-280.webp 280w, assets/imagens/capa-grupo-2-480.webp 480w" sizes="(min-width: 90rem) 296px, (min-width: 64rem) 22vw, (min-width: 48rem) 30vw, 45vw" width="480" height="340" loading="lazy" decoding="async" alt="Capa do livro do educador do Grupo 2, Encantando-se com a natureza."></picture><p><span>Grupo 2</span> Encantando-se com a natureza</p></li>
+        <li><picture><source type="image/avif" srcset="assets/imagens/capa-grupo-3-280.avif 280w, assets/imagens/capa-grupo-3-480.avif 480w" sizes="(min-width: 90rem) 296px, (min-width: 64rem) 22vw, (min-width: 48rem) 30vw, 45vw"><img src="assets/imagens/capa-grupo-3-480.webp" srcset="assets/imagens/capa-grupo-3-280.webp 280w, assets/imagens/capa-grupo-3-480.webp 480w" sizes="(min-width: 90rem) 296px, (min-width: 64rem) 22vw, (min-width: 48rem) 30vw, 45vw" width="480" height="340" loading="lazy" decoding="async" alt="Capa do livro do educador do Grupo 3, Desbravando a natureza."></picture><p><span>Grupo 3</span> Desbravando a natureza</p></li>
+        <li><picture><source type="image/avif" srcset="assets/imagens/capa-grupo-4-280.avif 280w, assets/imagens/capa-grupo-4-480.avif 480w" sizes="(min-width: 90rem) 296px, (min-width: 64rem) 22vw, (min-width: 48rem) 30vw, 45vw"><img src="assets/imagens/capa-grupo-4-480.webp" srcset="assets/imagens/capa-grupo-4-280.webp 280w, assets/imagens/capa-grupo-4-480.webp 480w" sizes="(min-width: 90rem) 296px, (min-width: 64rem) 22vw, (min-width: 48rem) 30vw, 45vw" width="480" height="340" loading="lazy" decoding="async" alt="Capa do livro do educador do Grupo 4, Caminhos da natureza."></picture><p><span>Grupo 4</span> Caminhos da natureza</p></li>
+        <li><picture><source type="image/avif" srcset="assets/imagens/capa-grupo-5-280.avif 280w, assets/imagens/capa-grupo-5-480.avif 480w" sizes="(min-width: 90rem) 296px, (min-width: 64rem) 22vw, (min-width: 48rem) 30vw, 45vw"><img src="assets/imagens/capa-grupo-5-480.webp" srcset="assets/imagens/capa-grupo-5-280.webp 280w, assets/imagens/capa-grupo-5-480.webp 480w" sizes="(min-width: 90rem) 296px, (min-width: 64rem) 22vw, (min-width: 48rem) 30vw, 45vw" width="480" height="340" loading="lazy" decoding="async" alt="Capa do livro do educador do Grupo 5, Aprendendo com a natureza."></picture><p><span>Grupo 5</span> Aprendendo com a natureza</p></li>
       </ol>
+      <p class="livros__chamada">Veja a coleção por dentro no material demonstrativo. <a class="link link--seta" href="#formulario-contato" data-amostra>Receber o material demonstrativo<svg class="icone" aria-hidden="true"><use href="#seta"/></svg></a></p>
+      </div>
+
+      <div class="paginas">
+        <h3 class="texto-subtitulo paginas__titulo">Por dentro dos livros</h3>
+        <figure class="paginas__grande">
+          <picture>
+            <source type="image/avif" srcset="assets/imagens/livro-educador-pagina-600.avif 600w, assets/imagens/livro-educador-pagina-900.avif 900w, assets/imagens/livro-educador-pagina-1200.avif 1200w, assets/imagens/livro-educador-pagina-1500.avif 1500w" sizes="(min-width: 90rem) 624px, (min-width: 64rem) 44vw, calc(100vw - 2.5rem)">
+            <source type="image/webp" srcset="assets/imagens/livro-educador-pagina-600.webp 600w, assets/imagens/livro-educador-pagina-900.webp 900w, assets/imagens/livro-educador-pagina-1200.webp 1200w, assets/imagens/livro-educador-pagina-1500.webp 1500w" sizes="(min-width: 90rem) 624px, (min-width: 64rem) 44vw, calc(100vw - 2.5rem)">
+            <img src="assets/imagens/livro-educador-pagina-900.webp" width="1500" height="1058" loading="lazy" decoding="async" alt="Página do livro do educador intitulada Inspiração para o educador, com seções ilustradas sobre contexto investigativo, projetação, perguntas desencadeadoras, sondagens, impressões das vivências, relatos e registros, construções e sugestões para a montagem da exposição, dicas e comunicação entre família e escola.">
+          </picture>
+          <figcaption>Livro do educador: a página “Inspiração para o educador” reúne o contexto investigativo, as perguntas desencadeadoras, as sondagens, os registros e a comunicação com as famílias. <a class="link" href="assets/imagens/livro-educador-pagina-1500.webp" target="_blank" rel="noopener">Ver a página em tamanho real (abre em nova aba)</a></figcaption>
+        </figure>
+        <figure class="paginas__ficha">
+          <picture>
+            <source type="image/avif" srcset="assets/imagens/ficha-bichos-de-jardim-420.avif 420w, assets/imagens/ficha-bichos-de-jardim-640.avif 640w" sizes="(min-width: 90rem) 296px, (min-width: 64rem) 22vw, calc(50vw - 1.75rem)">
+            <source type="image/webp" srcset="assets/imagens/ficha-bichos-de-jardim-420.webp 420w, assets/imagens/ficha-bichos-de-jardim-640.webp 640w" sizes="(min-width: 90rem) 296px, (min-width: 64rem) 22vw, calc(50vw - 1.75rem)">
+            <img src="assets/imagens/ficha-bichos-de-jardim-640.webp" width="640" height="476" loading="lazy" decoding="async" alt="Página de colantes com fotografias de bichos de jardim: borboleta, joaninha, aranha, minhoca, cigarra, lagartixa, formiga, beija-flor, caracol, gafanhoto, lagarta e abelha.">
+          </picture>
+          <figcaption>Colantes dos bichos de jardim.</figcaption>
+        </figure>
+        <figure class="paginas__ficha">
+          <picture>
+            <source type="image/avif" srcset="assets/imagens/ficha-espiral-420.avif 420w, assets/imagens/ficha-espiral-640.avif 640w" sizes="(min-width: 90rem) 296px, (min-width: 64rem) 22vw, calc(50vw - 1.75rem)">
+            <source type="image/webp" srcset="assets/imagens/ficha-espiral-420.webp 420w, assets/imagens/ficha-espiral-640.webp 640w" sizes="(min-width: 90rem) 296px, (min-width: 64rem) 22vw, calc(50vw - 1.75rem)">
+            <img src="assets/imagens/ficha-espiral-640.webp" width="640" height="476" loading="lazy" decoding="async" alt="Ficha de atividade com campos para nome e data e uma grande espiral desenhada em marrom.">
+          </picture>
+          <figcaption>Ficha de atividade: escolher pedras para o contorno da espiral.</figcaption>
+        </figure>
+      </div>
     </div>
   </section>
 
-  <!-- 7. O que entregamos -->
-  <section class="secao entregas" id="entregas" aria-labelledby="titulo-entregas">
-    <div class="recipiente entregas__grade">
-      <div class="entregas__cabeca">
-        <p class="rotulo">O que entregamos</p>
-        <h2 class="titulo-secao" id="titulo-entregas" data-revelar-linhas>Tudo o que entregamos tem um propósito.</h2>
-        <p class="serifa-grande">Apoiar melhores decisões para a aprendizagem.</p>
+  <!-- 6. O que entregamos -->
+  <section class="secao" id="entregas" aria-labelledby="titulo-entregas">
+    <div class="recipiente grade">
+      <p class="rotulo secao__rotulo"><span class="numeral" aria-hidden="true">5</span> O que entregamos</p>
+      <div class="secao__cabeca">
+        <h2 class="texto-titulo" id="titulo-entregas">Tudo o que entregamos tem um propósito: apoiar melhores decisões para a aprendizagem.</h2>
       </div>
-      <dl class="entregas__lista">
-        <div><dt>Diagnóstico</dt><dd>Para que cada decisão parta da realidade da rede.</dd></div>
-        <div><dt>Formação</dt><dd>Para ampliar as possibilidades de quem ensina.</dd></div>
-        <div><dt>Materiais</dt><dd>Para experiências de qualidade, ligadas ao currículo da rede.</dd></div>
-        <div><dt>Instrumentos</dt><dd>Para observar e registrar a aprendizagem com critérios comuns.</dd></div>
-        <div><dt>Assessoria</dt><dd>Para apoiar a secretaria nas escolhas pedagógicas e de gestão.</dd></div>
-        <div><dt>Acompanhamento</dt><dd>Para que o planejado chegue à sala e se sustente no tempo.</dd></div>
-        <div><dt>Tecnologia</dt><dd>Para organizar informações e dar agilidade às equipes.</dd></div>
-        <div><dt>Indicadores</dt><dd>Para enxergar o que avança e onde é preciso agir.</dd></div>
-        <div><dt>Documentação</dt><dd>Para dar visibilidade ao percurso das crianças.</dd></div>
-        <div><dt>Devolutivas</dt><dd>Para transformar o que foi observado em próximos passos.</dd></div>
+      <!-- A figura reproduz a coluna "Visita técnica" de uma página real da Assessoria Pedagógica, inteira, sem cortar frases. -->
+      <figure class="lateral-foto lateral-foto--pagina">
+        <picture class="foto">
+          <source type="image/avif" srcset="assets/imagens/pagina-assessoria-4x5-296.avif 296w, assets/imagens/pagina-assessoria-4x5-570.avif 570w" sizes="(min-width: 90rem) 296px, (min-width: 64rem) 22vw, 15rem">
+          <source type="image/webp" srcset="assets/imagens/pagina-assessoria-4x5-296.webp 296w, assets/imagens/pagina-assessoria-4x5-570.webp 570w" sizes="(min-width: 90rem) 296px, (min-width: 64rem) 22vw, 15rem">
+          <img src="assets/imagens/pagina-assessoria-4x5-570.webp" width="570" height="712" loading="lazy" decoding="async" alt="Coluna de uma página da Assessoria Pedagógica sob o título Visita técnica: formato presencial, carga horária de oito horas, para docentes e gestores; a descrição da visita e escuta pedagógica e três objetivos: visitar as unidades escolares para orientações no local, identificar necessidades e melhorias na implementação da metodologia e oferecer formação pedagógica aos docentes e gestores.">
+        </picture>
+        <figcaption>Assessoria pedagógica: roteiro da visita técnica às escolas, com docentes e gestores.</figcaption>
+      </figure>
+      <dl class="entregas">
+        <div><dt>Diagnóstico</dt><dd>Levantamento das crianças, dos profissionais, dos desafios e das prioridades, para que cada decisão parta da realidade da rede.</dd></div>
+        <div><dt>Formação</dt><dd>Formação de professores e gestores, planejada a partir do que foi observado nas escolas, para ampliar as possibilidades de quem ensina.</dd></div>
+        <div><dt>Materiais</dt><dd>Os livros da Coleção Percurso da Aprendizagem, o livro do educador e as fichas do Percurso da Criança, ligados ao currículo da rede.</dd></div>
+        <div><dt>Instrumentos</dt><dd>Instrumentos de observação e de registro, para acompanhar a aprendizagem com critérios comuns a toda a rede.</dd></div>
+        <div><dt>Assessoria</dt><dd>Visitas técnicas às escolas, para apoiar a secretaria nas escolhas pedagógicas e de gestão.</dd></div>
+        <div><dt>Acompanhamento</dt><dd>Acompanhamento do uso dos recursos e das práticas, para que o planejado chegue à sala e se sustente no tempo.</dd></div>
+        <div><dt>Tecnologia</dt><dd>Ferramentas para organizar as informações da rede e dar agilidade às equipes.</dd></div>
+        <div><dt>Indicadores</dt><dd>Indicadores de implantação, participação e aprendizagem, para enxergar o que avança e onde é preciso agir.</dd></div>
+        <div><dt>Documentação</dt><dd>Registro do trabalho realizado, para dar visibilidade ao percurso das crianças.</dd></div>
+        <div><dt>Devolutivas</dt><dd>Retornos a gestores e professores, para transformar o que foi observado em próximos passos.</dd></div>
       </dl>
     </div>
   </section>
 
-  <!-- 8. Inteligência da Aprendizagem -->
-  <section class="secao secao--folha inteligencia" id="evidencias" aria-labelledby="titulo-inteligencia" data-inteligencia>
-    <div class="recipiente">
-      <div class="inteligencia__cabeca">
-        <p class="rotulo">Inteligência da Aprendizagem</p>
-        <h2 class="titulo-display" id="titulo-inteligencia" data-revelar-linhas>Transformar evidências em melhores decisões.</h2>
-        <p class="destaque">Aquilo que a rede observa, registra e avalia ganha valor quando ajuda professores e gestores a compreender melhor sua realidade e decidir o que fazer a seguir.</p>
+  <!-- 7. Inteligência da Aprendizagem -->
+  <section class="secao" id="evidencias" aria-labelledby="titulo-evidencias">
+    <div class="recipiente grade">
+      <p class="rotulo secao__rotulo"><span class="numeral" aria-hidden="true">6</span> Inteligência da Aprendizagem</p>
+      <div class="secao__cabeca">
+        <h2 class="texto-titulo" id="titulo-evidencias">Transformar evidências em melhores decisões.</h2>
+        <p class="texto-destaque">Aquilo que a rede observa, registra e avalia ganha valor quando ajuda professores e gestores a compreender melhor sua realidade e decidir o que fazer a seguir.</p>
       </div>
 
-      <ol class="fluxo" role="list" data-fluxo>
+      <ol class="fluxo">
         <li><h3>Observar</h3><p>O que acontece nas salas e nas escolas.</p></li>
         <li><h3>Registrar</h3><p>O que foi observado, com critérios comuns.</p></li>
         <li><h3>Avaliar</h3><p>O que as crianças e os estudantes aprenderam.</p></li>
@@ -291,253 +328,289 @@
         <li><h3>Decidir</h3><p>O que fazer a seguir, em cada nível da rede.</p></li>
       </ol>
 
-      <div class="consulta">
-        <div class="consulta__texto">
-          <h3 class="titulo-frente">Uma boa decisão pública precisa de evidências para sustentá-la.</h3>
-          <p>Acompanhamos implantação, participação, práticas, indicadores e resultados para que o município tenha visibilidade sobre o trabalho realizado.</p>
-        </div>
-        <div class="consulta__itens">
-          <p class="rotulo">O que o município pode consultar</p>
-          <ul class="lista-feita" role="list">
-            <li>Relatórios de acompanhamento</li>
-            <li>Indicadores de implantação e participação</li>
-            <li>Evolução dos indicadores de aprendizagem</li>
-            <li>Pesquisas e estudos de referência</li>
-            <li>Documentação do trabalho realizado</li>
-            <li>Depoimentos das equipes</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 9. Na prática: vozes e equipe -->
-  <section class="secao provas" id="provas" aria-labelledby="titulo-provas">
-    <div class="recipiente">
-      <p class="rotulo" id="titulo-provas">Na prática</p>
-      <figure class="citacao">
-        <blockquote>
-          <p data-revelar-linhas>“Nós, professores e Secretaria de Educação, nos sentimos bem assessorados e estamos muito satisfeitos!”</p>
-        </blockquote>
-        <figcaption><strong>Vaulene</strong> Coordenadora pedagógica · Centenário do Sul, Paraná</figcaption>
+      <figure class="lateral-foto lateral-foto--consulta">
+        <picture class="foto">
+          <source media="(max-width: 47.99rem)" type="image/avif" srcset="assets/imagens/tampinhas-4x3-390.avif 390w, assets/imagens/tampinhas-4x3-532.avif 532w" sizes="calc(100vw - 2.5rem)">
+          <source media="(max-width: 47.99rem)" type="image/webp" srcset="assets/imagens/tampinhas-4x3-390.webp 390w, assets/imagens/tampinhas-4x3-532.webp 532w" sizes="calc(100vw - 2.5rem)">
+          <source type="image/avif" srcset="assets/imagens/tampinhas-4x5-q-300.avif 300w, assets/imagens/tampinhas-4x5-q-410.avif 410w" sizes="(min-width: 90rem) 296px, (min-width: 64rem) 22vw, 15rem">
+          <source type="image/webp" srcset="assets/imagens/tampinhas-4x5-q-300.webp 300w, assets/imagens/tampinhas-4x5-q-410.webp 410w" sizes="(min-width: 90rem) 296px, (min-width: 64rem) 22vw, 15rem">
+          <img src="assets/imagens/tampinhas-4x5-q-410.webp" width="410" height="513" loading="lazy" decoding="async" alt="Tampinhas coloridas espalhadas num chão cinza, ao lado da perna e do pé de uma criança sentada; uma delas tem tinta vermelha.">
+        </picture>
+        <figcaption>Cores, contagem e escolha: matemática que cabe no chão da sala.</figcaption>
       </figure>
-
-      <div class="provas__grade">
-        <figure class="relato">
-          <p>A diretora relata a participação das crianças e o fortalecimento do trabalho pedagógico na escola.</p>
-          <figcaption><strong>Aparecida Teixeira</strong> Diretora escolar · Miraselva, Paraná<span>Síntese do relato publicado, não transcrição literal.</span></figcaption>
-        </figure>
-
-        <div class="equipe">
-          <div class="equipe__cabeca">
-            <h2 class="titulo-frente">Conhecimento de quem estuda. Compromisso de quem educa.</h2>
-            <figure class="equipe__foto">
-              <picture>
-                <source type="image/avif" srcset="assets/imagens/autoras-da-colecao-320.avif 320w, assets/imagens/autoras-da-colecao-480.avif 480w" sizes="10rem">
-                <source type="image/webp" srcset="assets/imagens/autoras-da-colecao-320.webp 320w, assets/imagens/autoras-da-colecao-480.webp 480w" sizes="10rem">
-                <img src="assets/imagens/autoras-da-colecao-320.webp" width="320" height="320" loading="lazy" decoding="async" alt="Duas autoras da coleção sorrindo, deitadas lado a lado sobre livros abertos.">
-              </picture>
-              <figcaption>Autoras da Coleção Percurso da Aprendizagem</figcaption>
-            </figure>
-          </div>
-          <ul class="equipe__pessoas" role="list">
-            <li><p class="equipe__nome">Alessandra Nicolau</p><p class="equipe__papel">Pesquisa e desenvolvimento</p><p>Mestre em Educação pela Universidade Estadual Paulista. Pedagoga.</p></li>
-            <li><p class="equipe__nome">Ana Paula Lombardo</p><p class="equipe__papel">Autoria pedagógica</p><p>Pedagoga pela Universidade Estadual de Londrina. Pós-graduada em gestão educacional.</p></li>
-            <li><p class="equipe__nome">Janayna Costa</p><p class="equipe__papel">Autoria pedagógica</p><p>Pedagoga. Especialista em Psicopedagogia e Educação Inclusiva.</p></li>
-            <li><p class="equipe__nome">Laís Keilhold</p><p class="equipe__papel">Assessoria pedagógica</p><p>Pedagoga pela Universidade Estadual de Londrina. Especialista em Gestão Escolar pela Universidade de São Paulo.</p></li>
-          </ul>
-        </div>
+      <div class="consulta">
+        <h3 class="texto-subtitulo">Uma boa decisão pública precisa de evidências para sustentá-la.</h3>
+        <p>Acompanhamos implantação, participação, práticas, indicadores e resultados para que o município tenha visibilidade sobre o trabalho realizado.</p>
       </div>
-    </div>
-  </section>
-
-  <!-- 10. Manifesto -->
-  <section class="secao secao--escura manifesto" aria-labelledby="titulo-manifesto" data-manifesto>
-    <div class="recipiente manifesto__grade">
-      <h2 class="rotulo" id="titulo-manifesto">Manifesto</h2>
-      <p class="manifesto__abertura">O mundo inteiro está descobrindo novas formas de ensinar, compreender o desenvolvimento e melhorar a aprendizagem.</p>
-      <p class="manifesto__refrao" data-acender>Conhecimento existe. Boas práticas existem. Evidências existem. <em>Pessoas extraordinárias existem.</em></p>
-      <div class="manifesto__fecho">
-        <p>Nossa ambição é aproximar o melhor que existe em educação da realidade de cada rede, de cada escola e de cada criança brasileira.</p>
-        <p>Porque o lugar onde uma criança nasce não deveria determinar a qualidade das oportunidades que ela encontra para aprender.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- 11. Contratação -->
-  <section class="secao contratacao" id="contratacao" aria-labelledby="titulo-contratacao">
-    <div class="recipiente">
-      <div class="cabeca cabeca--dividida">
-        <div>
-          <p class="rotulo">Contratação</p>
-          <h2 class="titulo-secao" id="titulo-contratacao" data-revelar-linhas>Um caminho claro também na hora de contratar.</h2>
-        </div>
-        <p class="destaque">Nossa equipe apoia o município na compreensão do escopo, dos documentos, das etapas e das informações necessárias para avaliar a contratação com segurança.</p>
-      </div>
-
-      <ol class="trilha" role="list">
-        <li><span class="trilha__numero">01</span><h3>Conversa técnica</h3><p>Entendemos o contexto, as prioridades e o momento da secretaria.</p></li>
-        <li><span class="trilha__numero">02</span><h3>Levantamento</h3><p>Reunimos informações sobre a rede para orientar o que faz sentido propor.</p></li>
-        <li><span class="trilha__numero">03</span><h3>Escopo</h3><p>Delimitamos, junto com a equipe, o objeto e as entregas.</p></li>
-        <li><span class="trilha__numero">04</span><h3>Proposta</h3><p>Apresentamos a proposta técnica com etapas, entregas e cronograma.</p></li>
-        <li><span class="trilha__numero">05</span><h3>Documentação</h3><p>Disponibilizamos os documentos necessários para a análise.</p></li>
-        <li><span class="trilha__numero">06</span><h3>Processo administrativo</h3><p>Oferecemos as informações técnicas que o trâmite exigir.</p></li>
-        <li><span class="trilha__numero">07</span><h3>Implantação</h3><p>Iniciamos o trabalho junto às equipes, conforme o planejado.</p></li>
-      </ol>
-
-      <div class="seguranca">
-        <div class="seguranca__texto">
-          <h3 class="titulo-frente">Clareza para decidir. Segurança para levar a decisão adiante.</h3>
-          <p>Reunimos as informações de que a secretaria precisa para analisar, justificar e acompanhar a contratação com transparência.</p>
-          <a class="botao botao--escuro" href="#contato" data-assunto="Documentação técnica"><span>Solicitar a documentação técnica</span><svg class="icone" aria-hidden="true"><use href="#seta"/></svg></a>
-        </div>
-        <ul class="lista-feita seguranca__lista" role="list">
-          <li>Escopo detalhado do objeto e das entregas</li>
-          <li>Metodologia documentada</li>
-          <li>Referências de municípios atendidos</li>
-          <li>Objetos já contratados por outras redes</li>
-          <li>Informações institucionais da empresa</li>
-          <li>Documentação técnica para a análise</li>
-          <li>Suporte técnico da nossa equipe</li>
-          <li>Base legal aplicável, quando pertinente</li>
+      <div class="consulta__itens">
+        <h3 class="rotulo">O que o município pode consultar</h3>
+        <ul class="lista-feita lista-feita--consulta">
+          <li><svg class="icone" aria-hidden="true"><use href="#feito"/></svg>Relatórios de acompanhamento</li>
+          <li><svg class="icone" aria-hidden="true"><use href="#feito"/></svg>Indicadores de implantação e participação</li>
+          <li><svg class="icone" aria-hidden="true"><use href="#feito"/></svg>Evolução dos indicadores de aprendizagem</li>
+          <li><svg class="icone" aria-hidden="true"><use href="#feito"/></svg>Pesquisas e estudos de referência</li>
+          <li><svg class="icone" aria-hidden="true"><use href="#feito"/></svg>Documentação do trabalho realizado</li>
+          <li><svg class="icone" aria-hidden="true"><use href="#feito"/></svg>Depoimentos das equipes</li>
         </ul>
       </div>
     </div>
   </section>
 
-  <!-- 12. Perguntas frequentes -->
-  <section class="secao perguntas" id="perguntas" aria-labelledby="titulo-perguntas">
-    <div class="recipiente perguntas__grade">
-      <div class="perguntas__cabeca">
-        <p class="rotulo">Perguntas frequentes</p>
-        <h2 class="titulo-secao" id="titulo-perguntas" data-revelar-linhas>Escolher bem também é poder perguntar.</h2>
+  <!-- 8. Na prática: vozes e equipe -->
+  <section class="secao" id="pratica" aria-labelledby="titulo-pratica">
+    <div class="recipiente grade">
+      <div class="secao__lado">
+        <h2 class="rotulo secao__rotulo" id="titulo-pratica"><span class="numeral" aria-hidden="true">7</span> Na prática</h2>
       </div>
-      <div class="sanfona">
-        <details><summary><h3>Estamos buscando material ou assessoria. A Contagie oferece o quê?</h3><span class="sanfona__sinal" aria-hidden="true"></span></summary><div class="sanfona__resposta"><p>Os dois fazem parte da proposta. Os materiais oferecem repertório; a formação e a assessoria apoiam o seu uso e o trabalho pedagógico. A conversa com a equipe define como essas frentes entram no contexto da sua rede.</p></div></details>
-        <details><summary><h3>Já temos currículo, projetos e formações. Precisamos recomeçar?</h3><span class="sanfona__sinal" aria-hidden="true"></span></summary><div class="sanfona__resposta"><p>Não. O que a rede já construiu entra na conversa. O currículo orienta a formação, os recursos e o acompanhamento, e os projetos em andamento entram no planejamento e podem ser fortalecidos.</p></div></details>
-        <details><summary><h3>Isso vai substituir o trabalho das nossas equipes?</h3><span class="sanfona__sinal" aria-hidden="true"></span></summary><div class="sanfona__resposta"><p>Não. O trabalho é construído junto às equipes da secretaria e das escolas, respeitando o papel de cada uma. A formação da Contagie é planejada para somar ao que a rede já realiza.</p></div></details>
-        <details><summary><h3>Nossa equipe já está sobrecarregada. Como a implantação entra na rotina?</h3><span class="sanfona__sinal" aria-hidden="true"></span></summary><div class="sanfona__resposta"><p>Tempo, responsabilidades e acompanhamento são combinados desde o planejamento, considerando o calendário e as equipes do município. A proposta mostra o que o trabalho exigirá de cada equipe.</p></div></details>
-        <details><summary><h3>O trabalho termina quando a formação acaba?</h3><span class="sanfona__sinal" aria-hidden="true"></span></summary><div class="sanfona__resposta"><p>Não. Depois da formação, acompanhamos o uso dos recursos, apoiamos as decisões da coordenação e da gestão, identificamos novas necessidades e orientamos os próximos passos.</p></div></details>
-        <details><summary><h3>Podemos conhecer o material antes de conversar?</h3><span class="sanfona__sinal" aria-hidden="true"></span></summary><div class="sanfona__resposta"><p>Sim. Marque a opção no formulário de contato e a nossa equipe envia o material demonstrativo da Coleção Percurso da Aprendizagem.</p></div></details>
-        <details><summary><h3>O primeiro contato já é um compromisso de contratação?</h3><span class="sanfona__sinal" aria-hidden="true"></span></summary><div class="sanfona__resposta"><p>Não. É uma conversa para entender a realidade da rede e apresentar possibilidades. A decisão e os procedimentos de contratação pertencem ao município.</p></div></details>
+      <div class="pratica__vozes">
+        <figure class="citacao">
+          <blockquote>
+            <p>“Nós, professores e Secretaria de Educação, nos sentimos bem assessorados e estamos muito satisfeitos!”</p>
+          </blockquote>
+          <!-- PENDENTE: pedir ao cliente o nome completo da Vaulene, com autorização para publicar. -->
+          <figcaption><strong>Vaulene</strong>, coordenadora pedagógica em Centenário do Sul, Paraná</figcaption>
+          <!-- PENDENTE: com a autorização do cliente, acrescentar abaixo da citação a linha
+               "Redes que já trabalham com a Contagie: Centenário do Sul (Paraná), Miraselva (Paraná)…", com a lista confirmada. -->
+        </figure>
+
+        <figure class="relato">
+          <p class="relato__texto">A diretora relata a participação das crianças e o fortalecimento do trabalho pedagógico na escola.</p>
+          <!-- PENDENTE: pedir ao cliente uma frase literal e autorizada da Aparecida Teixeira; se vier, trocar a síntese pela citação.
+               Se o relato tiver fonte pública, trocar a nota por "Resumo do relato publicado em [veículo, data]", com link. -->
+          <figcaption><strong>Aparecida Teixeira</strong>, diretora escolar em Miraselva, Paraná. <span>Relato resumido pela equipe da Contagie.</span></figcaption>
+        </figure>
+      </div>
+
+      <figure class="equipe__foto">
+        <picture>
+          <source type="image/avif" srcset="assets/imagens/autoras-da-colecao-circulo-180.avif 180w, assets/imagens/autoras-da-colecao-circulo-360.avif 360w" sizes="(max-width: 47.99rem) 15rem, 10rem">
+          <source type="image/webp" srcset="assets/imagens/autoras-da-colecao-circulo-180.webp 180w, assets/imagens/autoras-da-colecao-circulo-360.webp 360w" sizes="(max-width: 47.99rem) 15rem, 10rem">
+          <img src="assets/imagens/autoras-da-colecao-circulo-360.webp" width="360" height="360" loading="lazy" decoding="async" alt="Duas autoras da coleção sorrindo, deitadas com as cabeças lado a lado em sentidos opostos, com um livro amarelo e um livro vermelho abertos.">
+        </picture>
+        <!-- PENDENTE: confirmar com o cliente quem são as duas autoras da fotografia e nomeá-las na legenda. -->
+        <figcaption>Autoras da Coleção Percurso da Aprendizagem</figcaption>
+      </figure>
+      <div class="equipe" id="equipe">
+        <h3 class="texto-subtitulo">Conhecimento de quem estuda. Compromisso de quem educa.</h3>
+        <ul class="pessoas">
+          <li><p class="pessoas__nome">Alessandra Nicolau</p><p class="pessoas__papel">Pesquisa e desenvolvimento</p><p>Mestre em Educação pela Universidade Estadual Paulista. Pedagoga.</p></li>
+          <li><p class="pessoas__nome">Ana Paula Lombardo</p><p class="pessoas__papel">Autoria pedagógica</p><p>Pedagoga pela Universidade Estadual de Londrina. <span class="sem-quebra">Pós-graduada</span> em Gestão Educacional.</p></li>
+          <li><p class="pessoas__nome">Janayna Costa</p><p class="pessoas__papel">Autoria pedagógica</p><p>Pedagoga. Especialista em Psicopedagogia e Educação Inclusiva.</p></li>
+          <li><p class="pessoas__nome">Laís Keilhold</p><p class="pessoas__papel">Assessoria pedagógica</p><p>Pedagoga pela Universidade Estadual de Londrina. Especialista em Gestão Escolar pela Universidade de São Paulo.</p></li>
+        </ul>
       </div>
     </div>
   </section>
 
-  <!-- 13. Visão e contato -->
-  <section class="secao secao--escura contato" id="contato" aria-labelledby="titulo-contato">
+  <!-- 9. Manifesto -->
+  <!-- Texto do manifesto ainda precisa ser validado pela Aline antes da publicação. -->
+  <section class="secao" id="manifesto" aria-labelledby="titulo-manifesto">
+    <div class="recipiente grade">
+      <h2 class="rotulo secao__rotulo" id="titulo-manifesto"><span class="numeral" aria-hidden="true">8</span> Manifesto</h2>
+      <div class="manifesto">
+        <p class="texto-destaque">O mundo inteiro está descobrindo novas formas de ensinar, compreender o desenvolvimento e melhorar a aprendizagem.</p>
+        <p class="manifesto__refrao"><span>Conhecimento existe.</span> <span>Boas práticas existem.</span> <span>Evidências existem.</span> <span>Pessoas extraordinárias&nbsp;existem.</span></p>
+        <div class="manifesto__fecho">
+          <p>Nossa ambição é aproximar o melhor que existe em educação da realidade de cada rede, de cada escola e de cada criança brasileira.</p>
+          <p>Porque o lugar onde uma criança nasce não deveria determinar a qualidade das oportunidades que ela encontra para aprender.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 10. Contratação -->
+  <section class="secao" id="contratacao" aria-labelledby="titulo-contratacao">
+    <div class="recipiente grade">
+      <p class="rotulo secao__rotulo"><span class="numeral" aria-hidden="true">9</span> Contratação</p>
+      <div class="secao__cabeca">
+        <h2 class="texto-titulo" id="titulo-contratacao">Um caminho claro também na hora de contratar.</h2>
+        <p class="texto-destaque">Nossa equipe apoia o município na compreensão do escopo, dos documentos, das etapas e das informações necessárias para avaliar a contratação com segurança.</p>
+      </div>
+
+      <ol class="trilha">
+        <li><span class="trilha__numero" aria-hidden="true">1</span><h3>Conversa técnica</h3><p>Entendemos o contexto, as prioridades e o momento da secretaria.</p></li>
+        <li><span class="trilha__numero" aria-hidden="true">2</span><h3>Levantamento</h3><p>Reunimos informações sobre a rede para orientar o que faz sentido propor.</p></li>
+        <li><span class="trilha__numero" aria-hidden="true">3</span><h3>Escopo</h3><p>Delimitamos, junto com a equipe, o objeto e as entregas.</p></li>
+        <li><span class="trilha__numero" aria-hidden="true">4</span><h3>Proposta</h3><p>Apresentamos a proposta técnica com etapas, entregas e cronograma.</p></li>
+        <li><span class="trilha__numero" aria-hidden="true">5</span><h3>Documentação</h3><p>Disponibilizamos os documentos necessários para a análise.</p></li>
+        <li><span class="trilha__numero" aria-hidden="true">6</span><h3>Processo administrativo</h3><p>Apoiamos o setor de compras com a documentação exigida pela modalidade escolhida pelo município.</p></li>
+        <li><span class="trilha__numero" aria-hidden="true">7</span><h3>Implantação</h3><p>Iniciamos o trabalho junto às equipes, conforme o planejado.</p></li>
+      </ol>
+
+      <!-- PENDENTE: confirmar com o cliente as modalidades de contratação usadas pelas prefeituras
+           (inexigibilidade, licitação, adesão a ata de registro de preços etc.) e acrescentar nas perguntas frequentes:
+           "Como a prefeitura pode contratar a Contagie?", com a resposta verdadeira. Pedir também como a proposta é calculada
+           e acrescentar "Como é definido o valor da proposta?". Não publicar nada antes da confirmação. -->
+      <div class="seguranca">
+        <h3 class="texto-subtitulo">Clareza para decidir. Segurança para levar a decisão adiante.</h3>
+        <p>Reunimos as informações de que a secretaria precisa para analisar, justificar e acompanhar a contratação com transparência.</p>
+      </div>
+      <div class="seguranca__itens">
+        <h3 class="rotulo" id="titulo-recebe">O que a secretaria recebe para a análise</h3>
+        <ul class="lista-feita seguranca__lista" aria-labelledby="titulo-recebe">
+          <li><svg class="icone" aria-hidden="true"><use href="#feito"/></svg>Escopo detalhado do objeto e das entregas</li>
+          <li><svg class="icone" aria-hidden="true"><use href="#feito"/></svg>Metodologia documentada</li>
+          <li><svg class="icone" aria-hidden="true"><use href="#feito"/></svg>Referências de municípios atendidos</li>
+          <li><svg class="icone" aria-hidden="true"><use href="#feito"/></svg>Objetos já contratados por outras redes</li>
+          <li><svg class="icone" aria-hidden="true"><use href="#feito"/></svg>Informações institucionais da empresa</li>
+          <li><svg class="icone" aria-hidden="true"><use href="#feito"/></svg>Documentação técnica para a análise</li>
+          <li><svg class="icone" aria-hidden="true"><use href="#feito"/></svg>Suporte técnico da nossa equipe</li>
+          <li><svg class="icone" aria-hidden="true"><use href="#feito"/></svg>Base legal aplicável, quando pertinente</li>
+        </ul>
+        <a class="botao seguranca__botao" href="#formulario-contato" data-assunto="Documentação técnica">Solicitar a documentação técnica<svg class="icone" aria-hidden="true"><use href="#seta"/></svg></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 11. Perguntas frequentes -->
+  <section class="secao" id="perguntas" aria-labelledby="titulo-perguntas">
+    <div class="recipiente grade">
+      <p class="rotulo secao__rotulo"><span class="numeral" aria-hidden="true">10</span> Perguntas frequentes</p>
+      <div class="secao__cabeca">
+        <h2 class="texto-titulo" id="titulo-perguntas">Escolher bem também é poder perguntar.</h2>
+        <p class="lateral__apoio">Não encontrou a sua dúvida? <a class="link" href="#contato">Fale com a nossa equipe</a></p>
+      </div>
+      <div class="sanfona">
+        <details><summary><span class="sanfona__pergunta">Estamos buscando material ou assessoria. A Contagie oferece o quê?</span><span class="sanfona__sinal" aria-hidden="true"></span></summary><p>Os dois fazem parte da proposta. Os materiais oferecem repertório; a formação e a assessoria apoiam o seu uso e o trabalho pedagógico. A conversa com a equipe define como essas frentes entram no contexto da sua rede.</p></details>
+        <!-- Resposta tirada da página "Assessoria pedagógica" do livro do educador (visita técnica presencial;
+             devolutiva e formação presenciais ou virtuais). Confirmar com o cliente antes da publicação definitiva. -->
+        <details><summary><span class="sanfona__pergunta">A formação e a assessoria são presenciais?</span><span class="sanfona__sinal" aria-hidden="true"></span></summary><p>Depende da ação. A visita técnica às escolas é presencial. A devolutiva e a formação de professores e gestores podem ser presenciais ou a distância. A proposta de cada rede mostra o formato de cada ação.</p></details>
+        <!-- PENDENTE: confirmar com o cliente se a Contagie atende municípios de outros estados e, com a resposta verdadeira,
+             acrescentar a pergunta "Vocês atendem municípios de outros estados?". -->
+        <details><summary><span class="sanfona__pergunta">Já temos currículo, projetos e formações. Precisamos recomeçar?</span><span class="sanfona__sinal" aria-hidden="true"></span></summary><p>Não. O que a rede já construiu entra na conversa. O currículo orienta a formação, os recursos e o acompanhamento, e os projetos em andamento entram no planejamento e podem ser fortalecidos.</p></details>
+        <details><summary><span class="sanfona__pergunta">Isso vai substituir o trabalho das nossas equipes?</span><span class="sanfona__sinal" aria-hidden="true"></span></summary><p>Não. O trabalho é construído junto às equipes da secretaria e das escolas, respeitando o papel de cada uma. A formação da Contagie é planejada para somar ao que a rede já realiza.</p></details>
+        <details><summary><span class="sanfona__pergunta">Nossa equipe já está sobrecarregada. Como a implantação entra na rotina?</span><span class="sanfona__sinal" aria-hidden="true"></span></summary><p>Tempo, responsabilidades e acompanhamento são combinados desde o planejamento, considerando o calendário e as equipes do município. A proposta mostra o que o trabalho exigirá de cada equipe.</p></details>
+        <details><summary><span class="sanfona__pergunta">O trabalho termina quando a formação acaba?</span><span class="sanfona__sinal" aria-hidden="true"></span></summary><p>Não. Depois da formação, acompanhamos o uso dos recursos, apoiamos as decisões da coordenação e da gestão, identificamos novas necessidades e orientamos os próximos passos.</p></details>
+        <details><summary><span class="sanfona__pergunta">Podemos conhecer o material antes de conversar?</span><span class="sanfona__sinal" aria-hidden="true"></span></summary><p>Sim. Marque a opção no formulário de contato e a nossa equipe envia o material demonstrativo da Coleção Percurso da Aprendizagem.</p></details>
+        <details><summary><span class="sanfona__pergunta">O primeiro contato já é um compromisso de contratação?</span><span class="sanfona__sinal" aria-hidden="true"></span></summary><p>Não. É uma conversa para entender a realidade da rede e apresentar possibilidades. A decisão e os procedimentos de contratação pertencem ao município.</p></details>
+      </div>
+    </div>
+  </section>
+
+  <!-- 12. Visão: encerramento com bloco próprio -->
+  <section class="secao secao--areia visao" aria-labelledby="titulo-visao">
     <div class="recipiente">
-      <div class="visao" data-visao>
-        <div class="visao__ondas" aria-hidden="true">
-          <span></span><span></span><span></span><span></span>
-        </div>
-        <p class="visao__pergunta titulo-display" data-revelar-linhas>E se cada criança do Brasil tivesse acesso ao melhor que existe no mundo em educação?</p>
-        <p class="visao__lema">Que o melhor da educação <em>contagie</em> o Brasil.</p>
+      <h2 class="visao__pergunta" id="titulo-visao">E se cada criança do Brasil tivesse acesso ao melhor que existe no mundo em educação?</h2>
+      <p class="visao__lema">Que o melhor da educação <span class="junto"><em>contagie</em> o Brasil.</span></p>
+    </div>
+  </section>
+
+  <!-- 13. Contato -->
+  <section class="secao contato" id="contato" aria-labelledby="titulo-contato">
+    <div class="recipiente grade">
+      <p class="rotulo secao__rotulo"><span class="numeral" aria-hidden="true">11</span> Contato</p>
+      <div class="secao__cabeca">
+        <h2 class="texto-titulo" id="titulo-contato">Cada município tem uma realidade. Vamos começar pela sua.</h2>
+        <p class="texto-destaque">Conte um pouco sobre a sua rede. Nossa equipe entra em contato pelo WhatsApp para agendar uma conversa com um consultor educacional.</p>
+      </div>
+      <div class="contato__lado">
+        <ul class="lista-feita">
+          <li><svg class="icone" aria-hidden="true"><use href="#feito"/></svg>Uma conversa técnica sobre o momento da sua rede</li>
+          <li><svg class="icone" aria-hidden="true"><use href="#feito"/></svg>Caminhos possíveis a partir da realidade do seu município</li>
+          <li><svg class="icone" aria-hidden="true"><use href="#feito"/></svg>Sem compromisso de contratação</li>
+        </ul>
+        <!-- PENDENTE (bloqueia a publicação): pedir ao cliente o número do WhatsApp, o e-mail, a razão social e o Cadastro
+             Nacional da Pessoa Jurídica. Com os dados, mostrar aqui, logo abaixo do subtítulo e antes da lista, o botão
+             <a class="botao botao--contorno" href="https://wa.me/55DDDNUMERO?text=Ol%C3%A1%2C%20sou%20da%20Secretaria%20de%20Educa%C3%A7%C3%A3o%20de%20">Conversar pelo WhatsApp</a>
+             e o e-mail <a class="link" href="mailto:EMAIL">EMAIL</a>, e repetir o botão no rodapé. -->
+        <figure class="contato__material">
+          <picture>
+            <source type="image/avif" srcset="assets/imagens/material-demonstrativo-600.avif 600w, assets/imagens/material-demonstrativo-1000.avif 1000w" sizes="(min-width: 90rem) 296px, (min-width: 64rem) 22vw, 15rem">
+            <source type="image/webp" srcset="assets/imagens/material-demonstrativo-600.webp 600w, assets/imagens/material-demonstrativo-1000.webp 1000w" sizes="(min-width: 90rem) 296px, (min-width: 64rem) 22vw, 15rem">
+            <img src="assets/imagens/material-demonstrativo-600.webp" width="1000" height="708" loading="lazy" decoding="async" alt="Capa do material demonstrativo Percurso da Aprendizagem, Descritivo do primeiro trimestre, dos Grupos 1 a 5, com fotografias de pés de crianças na terra e na grama.">
+          </picture>
+          <figcaption>A capa do material demonstrativo, que pode ser pedido no formulário.</figcaption>
+        </figure>
       </div>
 
-      <div class="contato__grade">
-        <div class="contato__texto">
-          <h2 class="titulo-secao" id="titulo-contato">Cada município tem uma realidade. Vamos começar pela sua.</h2>
-          <p class="destaque">Conte um pouco sobre a sua rede. Nossa equipe entra em contato pelo WhatsApp para agendar uma conversa com um consultor educacional.</p>
-          <ul class="lista-feita" role="list">
-            <li>Uma conversa técnica sobre o momento da sua rede</li>
-            <li>Caminhos possíveis a partir da realidade do seu município</li>
-            <li>Sem compromisso de contratação</li>
-          </ul>
-          <figure class="contato__material">
-            <picture>
-              <source type="image/avif" srcset="assets/imagens/material-demonstrativo-600.avif 600w, assets/imagens/material-demonstrativo-1000.avif 1000w" sizes="(min-width: 64rem) 24rem, 88vw">
-              <source type="image/webp" srcset="assets/imagens/material-demonstrativo-600.webp 600w, assets/imagens/material-demonstrativo-1000.webp 1000w" sizes="(min-width: 64rem) 24rem, 88vw">
-              <img src="assets/imagens/material-demonstrativo-600.webp" width="1000" height="708" loading="lazy" decoding="async" alt="Capa do material demonstrativo da Coleção Percurso da Aprendizagem, com fotografias de pés de crianças na natureza.">
-            </picture>
-            <figcaption>O material demonstrativo pode ser pedido no formulário.</figcaption>
-          </figure>
+      <!-- PENDENTE: pedir ao cliente o prazo real de retorno (por exemplo "em até um dia útil") e incluí-lo na mensagem de sucesso
+           do assets/js/principal.js e na página obrigado.html. -->
+      <form class="formulario" id="formulario-contato" name="contato" method="POST" action="/obrigado.html" data-netlify="true" netlify-honeypot="campo-armadilha">
+        <input type="hidden" name="form-name" value="contato">
+        <p class="formulario__armadilha" aria-hidden="true"><label>Não preencha este campo: <input type="text" name="campo-armadilha" tabindex="-1" autocomplete="off"></label></p>
+        <p class="formulario__aviso">Nome, cargo, município e WhatsApp são obrigatórios.</p>
+        <p class="formulario__escolha" role="status"></p>
+        <div class="campo">
+          <label for="campo-nome">Nome completo</label>
+          <input id="campo-nome" name="nome" type="text" autocomplete="name" required minlength="3" aria-describedby="erro-nome">
+          <p class="campo__erro" id="erro-nome" hidden></p>
         </div>
-
-        <form class="formulario" name="contato" method="POST" data-netlify="true" netlify-honeypot="campo-armadilha" data-formulario>
-          <input type="hidden" name="form-name" value="contato">
-          <p class="formulario__armadilha" aria-hidden="true"><label>Não preencha este campo: <input type="text" name="campo-armadilha" tabindex="-1" autocomplete="off"></label></p>
+        <div class="campo-duplo">
           <div class="campo">
-            <label for="campo-nome">Nome completo</label>
-            <input id="campo-nome" name="nome" type="text" autocomplete="name" required aria-describedby="erro-nome">
-            <p class="campo__erro" id="erro-nome" hidden></p>
-          </div>
-          <div class="campo-duplo">
-            <div class="campo">
-              <label for="campo-cargo">Cargo</label>
-              <input id="campo-cargo" name="cargo" type="text" autocomplete="organization-title" required aria-describedby="erro-cargo">
-              <p class="campo__erro" id="erro-cargo" hidden></p>
-            </div>
-            <div class="campo">
-              <label for="campo-municipio">Município e estado</label>
-              <input id="campo-municipio" name="municipio" type="text" autocomplete="address-level2" required aria-describedby="erro-municipio">
-              <p class="campo__erro" id="erro-municipio" hidden></p>
-            </div>
-          </div>
-          <div class="campo-duplo">
-            <div class="campo">
-              <label for="campo-whatsapp">WhatsApp <span class="campo__ajuda">com código de área</span></label>
-              <input id="campo-whatsapp" name="whatsapp" type="tel" inputmode="tel" autocomplete="tel" required aria-describedby="erro-whatsapp">
-              <p class="campo__erro" id="erro-whatsapp" hidden></p>
-            </div>
-            <div class="campo">
-              <label for="campo-email">E-mail <span class="campo__ajuda">opcional</span></label>
-              <input id="campo-email" name="email" type="email" autocomplete="email" aria-describedby="erro-email">
-              <p class="campo__erro" id="erro-email" hidden></p>
-            </div>
+            <label for="campo-cargo">Cargo</label>
+            <input id="campo-cargo" name="cargo" type="text" autocomplete="organization-title" required minlength="2" aria-describedby="erro-cargo">
+            <p class="campo__erro" id="erro-cargo" hidden></p>
           </div>
           <div class="campo">
-            <label for="campo-assunto">Assunto de interesse</label>
-            <select id="campo-assunto" name="assunto">
-              <option value="">Escolha uma opção</option>
-              <option>Educação Infantil</option>
-              <option>Recomposição da aprendizagem</option>
-              <option>As duas frentes</option>
-              <option>Documentação técnica</option>
-              <option>Ainda não sei</option>
-            </select>
+            <label for="campo-municipio">Município e estado</label>
+            <input id="campo-municipio" name="municipio" type="text" autocomplete="address-level2" required minlength="3" aria-describedby="erro-municipio">
+            <p class="campo__erro" id="erro-municipio" hidden></p>
           </div>
-          <div class="campo campo--caixa">
-            <input id="campo-amostra" name="amostra" type="checkbox" value="sim">
-            <label for="campo-amostra">Quero receber o material demonstrativo da Coleção Percurso da Aprendizagem.</label>
+        </div>
+        <div class="campo-duplo">
+          <div class="campo">
+            <label for="campo-whatsapp">WhatsApp <span class="campo__ajuda">com código de área</span></label>
+            <input id="campo-whatsapp" name="whatsapp" type="tel" inputmode="tel" autocomplete="tel" required pattern="[0-9\(\)+\s\-]{10,20}" title="Número com código de área" aria-describedby="erro-whatsapp">
+            <p class="campo__erro" id="erro-whatsapp" hidden></p>
           </div>
-          <button class="botao botao--folha botao--largo" type="submit"><span>Falar com a nossa equipe</span><svg class="icone" aria-hidden="true"><use href="#seta"/></svg></button>
-          <p class="formulario__nota">Usamos seus dados apenas para retornar este contato.</p>
-          <div class="formulario__status" role="status" aria-live="polite" data-formulario-status></div>
-        </form>
-      </div>
+          <div class="campo">
+            <label for="campo-email">E-mail <span class="campo__ajuda">opcional</span></label>
+            <input id="campo-email" name="email" type="email" autocomplete="email" aria-describedby="erro-email">
+            <p class="campo__erro" id="erro-email" hidden></p>
+          </div>
+        </div>
+        <div class="campo">
+          <label for="campo-assunto">Assunto de interesse</label>
+          <select id="campo-assunto" name="assunto">
+            <option value="">Escolha uma opção</option>
+            <option>Educação Infantil</option>
+            <option>Recomposição da aprendizagem</option>
+            <option>As duas frentes</option>
+            <option>Documentação técnica</option>
+            <option>Ainda não sei</option>
+          </select>
+        </div>
+        <div class="campo campo--caixa">
+          <input id="campo-amostra" name="amostra" type="checkbox" value="sim">
+          <label for="campo-amostra">Quero receber o material demonstrativo da Coleção Percurso da Aprendizagem.</label>
+        </div>
+        <div class="formulario__status" role="status" aria-live="polite"></div>
+        <button class="botao botao--largo" type="submit">Enviar e falar com a equipe<svg class="icone" aria-hidden="true"><use href="#seta"/></svg></button>
+        <p class="formulario__nota">Usamos seus dados apenas para retornar este contato.</p>
+      </form>
     </div>
   </section>
 
 </main>
 
 <footer class="rodape">
-  <div class="recipiente">
-    <div class="rodape__grade">
-      <div class="rodape__marca">
-        <img src="assets/marca/contagie-logotipo-claro.webp" width="360" height="152" loading="lazy" decoding="async" alt="Sistema Contagie de Aprendizagem">
-        <p>Gestão e Desenvolvimento da Aprendizagem para Redes Municipais.</p>
-      </div>
-      <nav class="rodape__navegacao" aria-label="Rodapé">
-        <ul role="list">
-          <li><a href="#metodo">Como funciona</a></li>
-          <li><a href="#frentes">Frentes</a></li>
-          <li><a href="#colecao">Coleção</a></li>
-          <li><a href="#evidencias">Evidências</a></li>
-          <li><a href="#contratacao">Contratação</a></li>
-          <li><a href="#perguntas">Perguntas frequentes</a></li>
-        </ul>
-      </nav>
-      <div class="rodape__contato">
-        <p>Sede em Londrina, Paraná</p>
-        <!-- Incluir aqui o e-mail, o WhatsApp e o perfil do Instagram da Contagie. -->
-        <a class="link-linha" href="#contato">Fale com a equipe</a>
-      </div>
+  <div class="recipiente grade">
+    <div class="rodape__marca">
+      <img src="assets/marca/contagie-logotipo-reduzido.webp" width="360" height="120" loading="lazy" decoding="async" alt="Contagie">
+      <p>Gestão e Desenvolvimento da Aprendizagem para Redes Municipais.</p>
+    </div>
+    <nav class="rodape__navegacao" aria-label="Rodapé">
+      <ul>
+        <li><a href="#metodo">Como funciona</a></li>
+        <li><a href="#frentes">O que oferecemos</a></li>
+        <li><a href="#colecao">Coleção</a></li>
+        <li><a href="#evidencias">Acompanhamento</a></li>
+        <li><a href="#equipe">Quem somos</a></li>
+        <li><a href="#contratacao">Contratação</a></li>
+        <li><a href="#perguntas">Perguntas frequentes</a></li>
+      </ul>
+    </nav>
+    <div class="rodape__contato">
+      <p>Sede em Londrina, Paraná</p>
+      <!-- PENDENTE: incluir aqui, em texto visível, o endereço completo em Londrina, o e-mail, o WhatsApp
+           (link wa.me) e o perfil do Instagram da Contagie, quando o cliente enviar os dados. -->
+      <a class="link" href="#contato">Fale com a nossa equipe</a>
     </div>
     <div class="rodape__base">
-      <!-- Incluir a razão social e o número do Cadastro Nacional da Pessoa Jurídica, e o endereço da política de privacidade. -->
-      <p>© <span data-ano>2026</span> Contagie</p>
-      <a class="rodape__topo" href="#inicio">Voltar ao início</a>
+      <!-- PENDENTE (bloqueia a publicação): incluir, em texto visível (15 a 16 pixels, cor #3F4F47), a razão social, o número do
+           Cadastro Nacional da Pessoa Jurídica, o endereço da sede em Londrina e o endereço da política de privacidade. -->
+      <p>© <span data-ano>2026</span> Contagie · Sistema Contagie de Aprendizagem</p>
+      <a class="link" href="#inicio">Voltar ao início</a>
     </div>
   </div>
 </footer>
