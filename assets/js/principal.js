@@ -98,6 +98,7 @@
         if (c && !validar(c) && !primeiro) primeiro = c;
       });
       if (primeiro) { mostrar('erro', 'Revise os campos indicados para enviar o contato.'); primeiro.focus(); return; }
+      if (form.hasAttribute('data-previa')) { mostrar('sucesso', 'Formulário válido. Esta é uma prévia: no site publicado no Netlify, o contato chega à equipe da Contagie.'); return; }
       var enviar = form.querySelector('[type="submit"]');
       form.setAttribute('aria-busy', 'true');
       enviar.disabled = true;
